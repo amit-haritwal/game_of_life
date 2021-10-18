@@ -87,6 +87,7 @@ export class Canvas {
 
   shuffelGrid() {
     const newelemets: Array<Array<Block>> = [];
+    let areNewElementsSame = true;
     for (var c = 0; c < 30; c++) {
       newelemets[c] = [];
       for (var r = 0; r < 40; r++) {
@@ -146,11 +147,15 @@ export class Canvas {
         }
         block.drawBlockWithflag(this.ctx, flag);
         newelemets[c][r] = block;
+        areNewElementsSame =
+          areNewElementsSame &&
+          this.elemets[c][r].isAlive === newelemets[c][r].isAlive;
       }
     }
-    // if (this.elemets === newelemets) {
-    // 	console.log("fasfa");
-    // }
+    if (areNewElementsSame) {
+      console.log('fasfa all same');
+      this.stopAnimation();
+    }
     this.elemets = newelemets;
   }
 }
