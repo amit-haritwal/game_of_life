@@ -93,40 +93,28 @@ export class Canvas {
       for (var r = 0; r < 40; r++) {
         var count: number = 0;
 
-        if (
-          this.isvalid(r - 1, c - 1) &&
-          this.elemets[c - 1][r - 1].isAlive === true
-        ) {
+        if (this.isvalid(r - 1, c - 1) && this.elemets[c - 1][r - 1].isAlive) {
           count++;
         }
-        if (this.isvalid(r - 1, c) && this.elemets[c][r - 1].isAlive === true) {
+        if (this.isvalid(r - 1, c) && this.elemets[c][r - 1].isAlive) {
           count++;
         }
-        if (
-          this.isvalid(r - 1, c + 1) &&
-          this.elemets[c + 1][r - 1].isAlive === true
-        ) {
+        if (this.isvalid(r - 1, c + 1) && this.elemets[c + 1][r - 1].isAlive) {
           count++;
         }
-        if (this.isvalid(r, c - 1) && this.elemets[c - 1][r].isAlive === true) {
+        if (this.isvalid(r, c - 1) && this.elemets[c - 1][r].isAlive) {
           count++;
         }
-        if (this.isvalid(r, c + 1) && this.elemets[c + 1][r].isAlive === true) {
+        if (this.isvalid(r, c + 1) && this.elemets[c + 1][r].isAlive) {
           count++;
         }
-        if (this.isvalid(r + 1, c) && this.elemets[c][r + 1].isAlive === true) {
+        if (this.isvalid(r + 1, c) && this.elemets[c][r + 1].isAlive) {
           count++;
         }
-        if (
-          this.isvalid(r + 1, c + 1) &&
-          this.elemets[c + 1][r + 1].isAlive === true
-        ) {
+        if (this.isvalid(r + 1, c + 1) && this.elemets[c + 1][r + 1].isAlive) {
           count++;
         }
-        if (
-          this.isvalid(r + 1, c - 1) &&
-          this.elemets[c - 1][r + 1].isAlive === true
-        ) {
+        if (this.isvalid(r + 1, c - 1) && this.elemets[c - 1][r + 1].isAlive) {
           count++;
         }
 
@@ -153,7 +141,7 @@ export class Canvas {
       }
     }
     if (areNewElementsSame) {
-      console.log('fasfa all same');
+      console.log(' all same');
       this.stopAnimation();
     }
     this.elemets = newelemets;
