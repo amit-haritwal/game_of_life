@@ -1,12 +1,9 @@
-import "./App.css";
-import Canvas from "./components/canvas/Canvas";
-
-function App() {
+import "./styles.css";
+import CanvasComponent from "./components/canvas/Canvas";
+export default function App() {
   return (
     <div className="App">
-      <Canvas />
+      <CanvasComponent />
     </div>
   );
 }
-
-export default App;
