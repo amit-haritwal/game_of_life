@@ -32,7 +32,7 @@ function CanvasComponent() {
 		if (timeoutValue === null) {
 			const timeout: NodeJS.Timer = setInterval(function () {
 				grid?.shuffelGrid();
-			}, 100);
+			}, 1);
 			setTimeout(timeout);
 		}
 	};
