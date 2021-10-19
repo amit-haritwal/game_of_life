@@ -43,6 +43,7 @@ export class Canvas {
   ctx: CanvasRenderingContext2D;
   elemets: Array<Array<Block>> = [];
   isCreated = false;
+  public speed = 200;
   isAnimationRunning: boolean = false;
   constructor(ctx: CanvasRenderingContext2D) {
     if (this.isCreated) {
@@ -66,18 +67,27 @@ export class Canvas {
     const y1: number = Math.floor(y / 20);
     this.elemets[y1][x1].setSelction(this.ctx);
   }
+
   isvalid(r: number, c: number) {
     if (r > 0 && c > 0 && r < 40 && c < 30) return true;
     return false;
   }
 
+  set setSpeed(newSpeed: number) {
+    this.speed = newSpeed;
+    console.log('now speed is ', this.speed);
+  }
+
   startAnimation() {
     const This = this;
     function loop() {
-      This.shuffelGrid();
-      if (This.isAnimationRunning) requestAnimationFrame(loop);
+      setTimeout(() => {
+        This.shuffelGrid();
+        if (This.isAnimationRunning) requestAnimationFrame(loop);
+      }, This.speed);
     }
     this.isAnimationRunning = true;
+
     requestAnimationFrame(loop);
   }
 

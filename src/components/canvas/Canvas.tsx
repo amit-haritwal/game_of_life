@@ -49,7 +49,11 @@ function CanvasComponent() {
       setGrid(grid);
     }
   };
-  
+
+  function handleChangeSpeed(event: any) {
+    if (grid) grid.setSpeed = (8000 / parseInt(event.target?.value)) as number;
+  }
+
   return (
     <>
       <StyledCanvas width={800} height={600} ref={canvasRef}></StyledCanvas>
@@ -57,6 +61,17 @@ function CanvasComponent() {
       <button onClick={forwardgrid}>forward</button>
       <button onClick={stopAnimation}>stop</button>
       <button onClick={clearGrid}>clear</button>
+      <div>
+        <label htmlFor="speed">Speed</label>
+        <input
+          type="range"
+          min={1}
+          max={200}
+          onChange={handleChangeSpeed}
+          defaultValue={40}
+          id="speed"
+        />
+      </div>
     </>
   );
 }
