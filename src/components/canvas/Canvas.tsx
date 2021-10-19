@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Controls from '../Controls';
 import { StyledCanvas } from './canvas.style';
 import { Canvas } from './helpers';
 
@@ -57,21 +58,14 @@ function CanvasComponent() {
   return (
     <>
       <StyledCanvas width={800} height={600} ref={canvasRef}></StyledCanvas>
-      <button onClick={animateGrid}>amimate</button>
-      <button onClick={forwardgrid}>forward</button>
-      <button onClick={stopAnimation}>stop</button>
-      <button onClick={clearGrid}>clear</button>
-      <div>
-        <label htmlFor="speed">Speed</label>
-        <input
-          type="range"
-          min={1}
-          max={200}
-          onChange={handleChangeSpeed}
-          defaultValue={40}
-          id="speed"
-        />
-      </div>
+
+      <Controls
+        handleChangeSpeed={handleChangeSpeed}
+        startAnimation={animateGrid}
+        clearGrid={clearGrid}
+        stopAnimation={stopAnimation}
+        forwardGrid={forwardgrid}
+      />
     </>
   );
 }
