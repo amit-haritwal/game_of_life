@@ -1,16 +1,13 @@
+import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import ClearIcon from '../icons/clearIcon';
 import ForwardIcon from '../icons/forwardIcon';
 import PlayIcon from '../icons/play';
 import StopIcon from '../icons/stopIcon';
 import { StyledControlsContainer } from './controls.style';
 
-function Controls({
-  handleChangeSpeed,
-  startAnimation,
-  clearGrid,
-  stopAnimation,
-  forwardGrid,
-}: any) {
+const Controls = (props: IControlProps) => {
+  const [isAnimationRunning, setisAnimationRunning] = useState(false);
+
   return (
     <StyledControlsContainer>
       <div>
@@ -20,25 +17,54 @@ function Controls({
             type="range"
             min={1}
             max={200}
-            onChange={handleChangeSpeed}
+            onChange={props.handleChangeSpeed}
             defaultValue={40}
             id="speed"
           />
         </div>
       </div>
-      <div className="play_icon" onClick={startAnimation}>
-        <PlayIcon />
-      </div>
-      <div className="clear_grid" onClick={clearGrid}>
-        <ClearIcon />
-      </div>
-      <div className="stop" onClick={stopAnimation}>
-        <StopIcon />
-      </div>
-      <div className="forward" onClick={forwardGrid}>
-        <ForwardIcon />
-      </div>
+      {!isAnimationRunning ? (
+        <div
+          className="play_icon"
+          onClick={() => {
+            setisAnimationRunning(true);
+            props.startAnimation();
+          }}
+        >
+          <PlayIcon />
+        </div>
+      ) : (
+        <div
+          className="stop"
+          onClick={() => {
+            setisAnimationRunning(false);
+            props.stopAnimation();
+          }}
+        >
+          <StopIcon />
+        </div>
+      )}
+
+      {!isAnimationRunning && (
+        <>
+          <div className="clear_grid" onClick={props.clearGrid}>
+            <ClearIcon />
+          </div>
+
+          <div className="forward" onClick={props.forwardGrid}>
+            <ForwardIcon />
+          </div>
+        </>
+      )}
     </StyledControlsContainer>
   );
-}
+};
 export default Controls;
+
+interface IControlProps {
+  handleChangeSpeed: ChangeEventHandler<HTMLInputElement>;
+  startAnimation: Function;
+  clearGrid: MouseEventHandler<HTMLDivElement>;
+  stopAnimation: Function;
+  forwardGrid: MouseEventHandler<HTMLDivElement>;
+}

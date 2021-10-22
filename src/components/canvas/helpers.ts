@@ -23,6 +23,8 @@ export class Block {
     this.isAlive = !this.isAlive;
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.strokeStyle = '#ffffff';
+    ctx.stroke();
     ctx.fillStyle = this.isAlive ? '#ffffff' : '#41A490';
     ctx.fill();
     ctx.closePath();
