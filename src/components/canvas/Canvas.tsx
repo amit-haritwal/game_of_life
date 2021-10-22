@@ -57,7 +57,7 @@ function CanvasComponent() {
 
   return (
     <>
-      <StyledCanvas width={800} height={600} ref={canvasRef}></StyledCanvas>
+      <StyledCanvas width={1440} height={700} ref={canvasRef}></StyledCanvas>
 
       <Controls
         handleChangeSpeed={handleChangeSpeed}

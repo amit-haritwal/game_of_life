@@ -55,9 +55,9 @@ export class Canvas {
     this.ctx = ctx;
   }
   createGrid() {
-    for (var c = 0; c < 30; c++) {
+    for (var c = 0; c < 35; c++) {
       this.elemets[c] = [];
-      for (var r = 0; r < 40; r++) {
+      for (var r = 0; r < 72; r++) {
         const block = new Block(r * 20, c * 20);
         block.drawBlock(this.ctx);
         this.elemets[c][r] = block;
@@ -71,7 +71,7 @@ export class Canvas {
   }
 
   isvalid(r: number, c: number) {
-    if (r > 0 && c > 0 && r < 40 && c < 30) return true;
+    if (r > 0 && c > 0 && r < 72 && c < 35) return true;
     return false;
   }
 
@@ -100,9 +100,9 @@ export class Canvas {
   shuffelGrid() {
     const newelemets: Array<Array<Block>> = [];
     let areNewElementsSame = true;
-    for (var c = 0; c < 30; c++) {
+    for (var c = 0; c < 35; c++) {
       newelemets[c] = [];
-      for (var r = 0; r < 40; r++) {
+      for (var r = 0; r < 72; r++) {
         var count: number = 0;
 
         if (this.isvalid(r - 1, c - 1) && this.elemets[c - 1][r - 1].isAlive) {
