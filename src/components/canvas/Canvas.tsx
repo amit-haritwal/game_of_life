@@ -12,7 +12,7 @@ import i4 from '../images/4.png';
 import i5 from '../images/5.png';
 
 function CanvasComponent() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement|null>(null);
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
   const [context, set2DContext] = useState<CanvasRenderingContext2D | null>(
     null
