@@ -1,3 +1,5 @@
+import { noOfCol, noOfRow } from '../Constants';
+
 export class Block {
   height: number = 20;
   width: number = 20;
@@ -42,6 +44,8 @@ export class Block {
 }
 
 export class Canvas {
+  nofelementscolumn: number;
+  nofelementsrows: number;
   ctx: CanvasRenderingContext2D;
   elemets: Array<Array<Block>> = [];
   isCreated = false;
@@ -51,19 +55,22 @@ export class Canvas {
     if (this.isCreated) {
       throw new Error('Canvas is singleton class');
     }
+    this.nofelementsrows = noOfRow;
+    this.nofelementscolumn = noOfCol;
     this.isCreated = true;
     this.ctx = ctx;
   }
   createGrid() {
-    for (var c = 0; c < 35; c++) {
+    for (var c = 0; c < this.nofelementsrows; c++) {
       this.elemets[c] = [];
-      for (var r = 0; r < 72; r++) {
+      for (var r = 0; r < this.nofelementscolumn; r++) {
         const block = new Block(r * 20, c * 20);
         block.drawBlock(this.ctx);
         this.elemets[c][r] = block;
       }
     }
   }
+
   changestate(x: number, y: number) {
     const x1: number = Math.floor(x / 20);
     const y1: number = Math.floor(y / 20);
@@ -71,13 +78,18 @@ export class Canvas {
   }
 
   isvalid(r: number, c: number) {
-    if (r > 0 && c > 0 && r < 72 && c < 35) return true;
+    if (
+      r > 0 &&
+      c > 0 &&
+      r < this.nofelementscolumn &&
+      c < this.nofelementsrows
+    )
+      return true;
     return false;
   }
 
   set setSpeed(newSpeed: number) {
     this.speed = newSpeed;
-    console.log('now speed is ', this.speed);
   }
 
   startAnimation() {
@@ -89,7 +101,6 @@ export class Canvas {
       }, This.speed);
     }
     this.isAnimationRunning = true;
-
     requestAnimationFrame(loop);
   }
 
@@ -100,36 +111,66 @@ export class Canvas {
   shuffelGrid() {
     const newelemets: Array<Array<Block>> = [];
     let areNewElementsSame = true;
-    for (var c = 0; c < 35; c++) {
+    for (var c = 0; c < this.nofelementsrows; c++) {
       newelemets[c] = [];
-      for (var r = 0; r < 72; r++) {
+      for (var r = 0; r < this.nofelementscolumn; r++) {
         var count: number = 0;
-
-        if (this.isvalid(r - 1, c - 1) && this.elemets[c - 1][r - 1].isAlive) {
+        if (
+          this.elemets[(c - 1 + this.nofelementsrows) % this.nofelementsrows][
+            (r - 1 + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r - 1, c) && this.elemets[c][r - 1].isAlive) {
+        if (
+          this.elemets[(c + this.nofelementsrows) % this.nofelementsrows][
+            (r - 1 + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r - 1, c + 1) && this.elemets[c + 1][r - 1].isAlive) {
+        if (
+          this.elemets[(c + 1 + this.nofelementsrows) % this.nofelementsrows][
+            (r - 1 + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r, c - 1) && this.elemets[c - 1][r].isAlive) {
+        if (
+          this.elemets[(c - 1 + this.nofelementsrows) % this.nofelementsrows][
+            (r + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r, c + 1) && this.elemets[c + 1][r].isAlive) {
+        if (
+          this.elemets[(c + 1 + this.nofelementsrows) % this.nofelementsrows][
+            (r + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r + 1, c) && this.elemets[c][r + 1].isAlive) {
+        if (
+          this.elemets[(c + this.nofelementsrows) % this.nofelementsrows][
+            (r + 1 + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r + 1, c + 1) && this.elemets[c + 1][r + 1].isAlive) {
+        if (
+          this.elemets[(c + 1 + this.nofelementsrows) % this.nofelementsrows][
+            (r + 1 + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-        if (this.isvalid(r + 1, c - 1) && this.elemets[c - 1][r + 1].isAlive) {
+        if (
+          this.elemets[(c - 1 + this.nofelementsrows) % this.nofelementsrows][
+            (r + 1 + this.nofelementscolumn) % this.nofelementscolumn
+          ].isAlive
+        ) {
           count++;
         }
-
         const block = new Block(r * 20, c * 20);
         var flag: boolean;
         if (this.elemets[c][r].isAlive) {
@@ -158,4 +199,22 @@ export class Canvas {
     }
     this.elemets = newelemets;
   }
+
+  makeSomePattern = async (pattern: Array<Array<number>>) => {
+    for (var c = 0; c < this.nofelementsrows; c++) {
+      this.elemets[c] = [];
+      for (var r = 0; r < this.nofelementscolumn; r++) {
+        const block = new Block(r * 20, c * 20);
+        block.drawBlock(this.ctx);
+        this.elemets[c][r] = block;
+      }
+    }
+    for (let i = 0; i < pattern.length; i++) {
+      this.elemets[pattern[i][0]][pattern[i][1]].isAlive = true;
+      this.elemets[pattern[i][0]][pattern[i][1]].drawBlockWithflag(
+        this.ctx,
+        true
+      );
+    }
+  };
 }

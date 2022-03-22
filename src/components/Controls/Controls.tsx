@@ -1,4 +1,11 @@
-import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useState,
+  useEffect,
+} from 'react';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectThemeDetails, themeDetails } from '../../redux/themereducer';
 import ClearIcon from '../icons/clearIcon';
 import ForwardIcon from '../icons/forwardIcon';
 import PlayIcon from '../icons/play';
@@ -7,9 +14,14 @@ import { StyledControlsContainer } from './controls.style';
 
 const Controls = (props: IControlProps) => {
   const [isAnimationRunning, setisAnimationRunning] = useState(false);
-
+  const themeInfo = useAppSelector(selectThemeDetails);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    setisAnimationRunning(themeInfo.state);
+  }, [themeInfo]);
   return (
     <StyledControlsContainer>
+      <div>{!isAnimationRunning && <button>Save this Position</button>}</div>
       <div>
         <div>
           <label htmlFor="speed">Speed</label>
@@ -28,6 +40,11 @@ const Controls = (props: IControlProps) => {
           className="play_icon"
           onClick={() => {
             setisAnimationRunning(true);
+            dispatch(
+              themeDetails({
+                state: true,
+              })
+            );
             props.startAnimation();
           }}
         >
@@ -38,6 +55,11 @@ const Controls = (props: IControlProps) => {
           className="stop"
           onClick={() => {
             setisAnimationRunning(false);
+            dispatch(
+              themeDetails({
+                state: false,
+              })
+            );
             props.stopAnimation();
           }}
         >
