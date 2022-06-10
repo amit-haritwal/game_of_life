@@ -21,7 +21,7 @@ const Controls = (props: IControlProps) => {
   }, [themeInfo]);
   return (
     <StyledControlsContainer>
-      <div>{!isAnimationRunning && <button>Save this Position</button>}</div>
+      {/* <div>{!isAnimationRunning && <button>Save this Position</button>}</div> */}
       <div>
         <div>
           <label htmlFor="speed">Speed</label>
